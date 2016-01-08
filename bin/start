@@ -1,0 +1,4 @@
+#!/usr/bin/env
+
+rails server --binding=0.0.0.0 -d --pid `pwd`/pidfile &
+

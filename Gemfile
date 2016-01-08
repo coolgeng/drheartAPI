@@ -9,6 +9,7 @@ gem 'spring', :group => :development
 
 gem 'mysql2', '~> 0.3.18'
 
+gem 'rabl'
 
 
 # To use ActiveModel has_secure_password
