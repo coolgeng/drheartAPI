@@ -1,0 +1,3 @@
+class DoctorsController
+  
+end

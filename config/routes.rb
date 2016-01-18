@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :users, except: :edit
+  resources :users , defaults: {format: :json} , except: :edit 
+  resources :heart_rates, defaults: {format: :json} , except: :edit  
+  resources :doctors, defaults: {format: :json} , except: :edit 
+  resources :patients, defaults: {format: :json} , except: :edit   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

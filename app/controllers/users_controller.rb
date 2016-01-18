@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   include ActionController::Cookies
   include ActionController::ImplicitRender
   
+  
   # GET /users
   # GET /users.json
   def index
@@ -62,6 +63,12 @@ class UsersController < ApplicationController
     @user.destroy
 
     head :no_content
+  end
+  
+  def heart_rate_list
+    @user = User.find(params[:id])
+    
+    render json: @user.heart_rates
   end
   
   private
