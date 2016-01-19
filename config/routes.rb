@@ -4,20 +4,21 @@ Rails.application.routes.draw do
   resources :doctors, defaults: {format: :json} , except: :edit 
   resources :patients,  defaults: {format: :json} , except: :edit  
 
-  get '/patient/userinfo/:id', to: 'users#show', as: 'show', defaults: {format: :json}
-  get '/patient/heartratelist/:id', to: 'patients#heart_rate_list', as: 'heart_rate_list', defaults: {format: :json}
-  get '/patient/incidentlist/:id', to: 'patients#incident_list', as: 'incident_list', defaults: {format: :json}
-  get '/patient/doctorlist/:id', to: 'patients#doctor_list', as: 'doctor_list', defaults: {format: :json}
-  post '/patient/adddoctor', to: 'patients#add_doctor', as: 'add_doctor', defaults: {format: :json}
-  delete '/patient/removedoctor', to: 'patients#remove_doctor', as: 'remove_doctor', defaults: {format: :json}
-  get '/patient/searchdoctor', to: 'patients#search_doctor', as: 'search_doctor', defaults: {format: :json}
-  post '/patient/uploadheartrate', to: 'patients#upload_heartrate', as: 'upload_heartrate', defaults: {format: :json}
+  get '/v1/patient/userinfo/:id', to: 'users#show', defaults: {format: :json}
+  get '/v1/patient/heartratelist/:id', to: 'patients#heart_rate_list',  defaults: {format: :json}
+  get '/v1/patient/incidentlist/:id', to: 'patients#incident_list',  defaults: {format: :json}
+  get '/v1/patient/doctorlist/:id', to: 'patients#doctor_list',  defaults: {format: :json}
+  post '/v1/patient/adddoctor', to: 'patients#add_doctor',  defaults: {format: :json}
+  delete '/v1/patient/removedoctor', to: 'patients#remove_doctor',  defaults: {format: :json}
+  get '/v1/patient/searchdoctor', to: 'patients#search_doctor',  defaults: {format: :json}
+  post '/v1/patient/uploadheartrate', to: 'patients#upload_heartrate', defaults: {format: :json}
   
-  get '/doctor/userinfo/:id', to: 'users#show', as: 'show', defaults: {format: :json}
-  get '/doctor/incidentlist/:id', to: 'doctors#incident_list', as: 'incident_list', defaults: {format: :json}
-  post '/doctor/treat', to: 'doctors#treat', as: 'treat', defaults: {format: :json}  
-  get '/doctor/patientlist/:id', to: 'doctors#patient_list', as: 'patient_list', defaults: {format: :json}  
-  post '/doctor/accept', to: 'doctors#accept', as: 'accept', defaults: {format: :json}    
+  get '/v1/doctor/userinfo/:id', to: 'users#show', defaults: {format: :json}
+  get '/v1/doctor/incidentlist/:id', to: 'doctors#incident_list', defaults: {format: :json}
+  post '/v1/doctor/treat', to: 'doctors#treat', defaults: {format: :json}  
+  get '/v1/doctor/patientlist/:id', to: 'doctors#patient_list',  defaults: {format: :json}  
+  post '/v1/doctor/accept', to: 'doctors#accept', defaults: {format: :json}    
+    
   
   # match '/patients/heartratelist' => 'patients_controller#heart_rate_list', :as => 'heart_rate_list'
    

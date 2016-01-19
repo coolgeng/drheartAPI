@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   include ActionController::Helpers
   include ActionController::Cookies
   include ActionController::ImplicitRender
-  
+
   
   # GET /users
   # GET /users.json
@@ -20,8 +20,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-    
-    render json: @user
+    render json: @user    
   end
 
   # GET /users/new
@@ -71,6 +70,7 @@ class UsersController < ApplicationController
   #   render json: @user.heart_rates
   # end
   
+    
   private
      # Using a private method to encapsulate the permissible parameters is just a good pattern
      # since you'll be able to reuse the same permit list between create and update. Also, you
