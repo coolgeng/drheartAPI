@@ -4,11 +4,20 @@ Rails.application.routes.draw do
   resources :doctors, defaults: {format: :json} , except: :edit 
   resources :patients,  defaults: {format: :json} , except: :edit  
 
-  get '/patients/userinfo/:id', to: 'users#show', as: 'show', defaults: {format: :json}     
-  get '/patients/heartratelist/:id', to: 'patients#heart_rate_list', as: 'heart_rate_list', defaults: {format: :json} 
-  get '/patients/incidentlist/:id', to: 'patients#incident_list', as: 'incident_list', defaults: {format: :json}   
-  get '/patients/doctorlist/:id', to: 'patients#doctor_list', as: 'doctor_list', defaults: {format: :json}     
-  post '/patients/adddoctor', to: 'patients#add_doctor', as: 'add_doctor', defaults: {format: :json}     
+  get '/patient/userinfo/:id', to: 'users#show', as: 'show', defaults: {format: :json}
+  get '/patient/heartratelist/:id', to: 'patients#heart_rate_list', as: 'heart_rate_list', defaults: {format: :json}
+  get '/patient/incidentlist/:id', to: 'patients#incident_list', as: 'incident_list', defaults: {format: :json}
+  get '/patient/doctorlist/:id', to: 'patients#doctor_list', as: 'doctor_list', defaults: {format: :json}
+  post '/patient/adddoctor', to: 'patients#add_doctor', as: 'add_doctor', defaults: {format: :json}
+  delete '/patient/removedoctor', to: 'patients#remove_doctor', as: 'remove_doctor', defaults: {format: :json}
+  get '/patient/searchdoctor', to: 'patients#search_doctor', as: 'search_doctor', defaults: {format: :json}
+  post '/patient/uploadheartrate', to: 'patients#upload_heartrate', as: 'upload_heartrate', defaults: {format: :json}
+  
+  get '/doctor/userinfo/:id', to: 'users#show', as: 'show', defaults: {format: :json}
+  get '/doctor/incidentlist/:id', to: 'doctors#incident_list', as: 'incident_list', defaults: {format: :json}
+  post '/doctor/treat', to: 'doctors#treat', as: 'treat', defaults: {format: :json}  
+  get '/doctor/patientlist/:id', to: 'doctors#patient_list', as: 'patient_list', defaults: {format: :json}  
+  post '/doctor/accept', to: 'doctors#accept', as: 'accept', defaults: {format: :json}    
   
   # match '/patients/heartratelist' => 'patients_controller#heart_rate_list', :as => 'heart_rate_list'
    
