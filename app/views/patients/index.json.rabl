@@ -1,0 +1,2 @@
+collection @patients
+attributes :id

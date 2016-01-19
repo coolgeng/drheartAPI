@@ -2,7 +2,14 @@ Rails.application.routes.draw do
   resources :users , defaults: {format: :json} , except: :edit 
   resources :heart_rates, defaults: {format: :json} , except: :edit  
   resources :doctors, defaults: {format: :json} , except: :edit 
-  resources :patients, defaults: {format: :json} , except: :edit   
+  resources :patients,  defaults: {format: :json} , except: :edit  
+  
+  get '/patients/heartratelist/:id', to: 'patients#heart_rate_list', as: 'heart_rate_list', defaults: {format: :json} 
+  get '/patients/incidentlist/:id', to: 'patients#incident_list', as: 'incident_list', defaults: {format: :json}   
+  get '/patients/userinfo/:id', to: 'users#show', as: 'show', defaults: {format: :json}   
+  
+  # match '/patients/heartratelist' => 'patients_controller#heart_rate_list', :as => 'heart_rate_list'
+   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

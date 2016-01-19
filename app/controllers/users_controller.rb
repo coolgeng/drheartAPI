@@ -65,11 +65,11 @@ class UsersController < ApplicationController
     head :no_content
   end
   
-  def heart_rate_list
-    @user = User.find(params[:id])
-    
-    render json: @user.heart_rates
-  end
+  # def heart_rate_list
+  #   @user = User.find(params[:id])
+  #
+  #   render json: @user.heart_rates
+  # end
   
   private
      # Using a private method to encapsulate the permissible parameters is just a good pattern

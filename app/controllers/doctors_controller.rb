@@ -1,3 +1,3 @@
-class DoctorsController
+class DoctorsController < ApplicationController
   
 end

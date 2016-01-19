@@ -1,0 +1,2 @@
+collection @incidents
+attributes :id

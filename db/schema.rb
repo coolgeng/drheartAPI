@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118224420) do
+ActiveRecord::Schema.define(version: 20160118225906) do
 
   create_table "doctors", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -31,10 +31,16 @@ ActiveRecord::Schema.define(version: 20160118224420) do
 
   create_table "incidents", force: :cascade do |t|
     t.integer  "patient_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "doctor_id",  limit: 4
+    t.string   "desp",       limit: 255
+    t.string   "treat",      limit: 255
+    t.integer  "status",     limit: 4
+    t.integer  "time",       limit: 4
   end
 
+  add_index "incidents", ["doctor_id"], name: "index_incidents_on_doctor_id", using: :btree
   add_index "incidents", ["patient_id"], name: "index_incidents_on_patient_id", using: :btree
 
   create_table "patients", force: :cascade do |t|
