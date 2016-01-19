@@ -1,3 +1,3 @@
-collection @patients
-attributes :id
-child(:doctor) {attributes :name, id, status}
+# collection @patients
+# attributes :id, :name, :phone, :avatar, :sex, :age
+#

@@ -84,13 +84,14 @@ class PatientsController < ApplicationController
   end
   
   def add_doctor
-    @patient = Patient.new(params[:patient])    
     
-    if @patient.save
-      render json: @patient, status: :created, location: @patient
-    else
-      render json: @patient.errors, status: :unprocessable_entity
-    end
+    # @patient = Patient.new(params[:patient])
+    #
+    # if @patient.save
+    #   render json: @patient, status: :created, location: @patient
+    # else
+    #   render json: @patient.errors, status: :unprocessable_entity
+    # end
     
   end
   
@@ -99,6 +100,6 @@ class PatientsController < ApplicationController
      # since you'll be able to reuse the same permit list between create and update. Also, you
      # can specialize this method with per-patient checking of permissible attributes.
      def patient_params
-       params.require(:patient).permit(:id)
+       params.require(:patient).permit(:name, :sex, :age, :phone, :avatar)
      end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160119011217) do
+ActiveRecord::Schema.define(version: 20160119215451) do
 
   create_table "doctor_patients", id: false, force: :cascade do |t|
     t.integer  "patient_id", limit: 4
@@ -25,9 +25,20 @@ ActiveRecord::Schema.define(version: 20160119011217) do
   add_index "doctor_patients", ["patient_id"], name: "index_doctor_patients_on_patient_id", using: :btree
 
   create_table "doctors", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "user_id",    limit: 4
+    t.string   "name",       limit: 255
+    t.string   "phone",      limit: 255
+    t.string   "avatar",     limit: 255
+    t.string   "hospital",   limit: 255
+    t.string   "sector",     limit: 255
+    t.string   "position",   limit: 255
+    t.integer  "sex",        limit: 4
+    t.integer  "age",        limit: 4
   end
+
+  add_index "doctors", ["user_id"], name: "index_doctors_on_user_id", using: :btree
 
   create_table "doctors_patients", force: :cascade do |t|
     t.integer  "patient_id", limit: 4
@@ -41,10 +52,10 @@ ActiveRecord::Schema.define(version: 20160119011217) do
   add_index "doctors_patients", ["patient_id"], name: "index_doctors_patients_on_patient_id", using: :btree
 
   create_table "heart_rates", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
     t.integer  "rate",       limit: 4
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "user_id",    limit: 4
     t.integer  "patient_id", limit: 4
   end
 
@@ -78,21 +89,21 @@ ActiveRecord::Schema.define(version: 20160119011217) do
   add_index "patient_doctors", ["patient_id"], name: "index_patient_doctors_on_patient_id", using: :btree
 
   create_table "patients", force: :cascade do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "user_id",    limit: 4
+    t.string   "name",       limit: 255
+    t.string   "phone",      limit: 255
+    t.string   "avatar",     limit: 255
+    t.integer  "sex",        limit: 4
+    t.integer  "age",        limit: 4
   end
 
   add_index "patients", ["user_id"], name: "index_patients_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "sex",        limit: 4
-    t.integer  "age",        limit: 4
-    t.string   "phone1",     limit: 255
-    t.string   "avatar",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
