@@ -77,6 +77,22 @@ class PatientsController < ApplicationController
     render json: @patient.incident
   end
     
+  def doctor_list
+    @patient = Patient.find(params[:id])
+    
+    render json: @patient.doctors
+  end
+  
+  def add_doctor
+    @patient = Patient.new(params[:patient])    
+    
+    if @patient.save
+      render json: @patient, status: :created, location: @patient
+    else
+      render json: @patient.errors, status: :unprocessable_entity
+    end
+    
+  end
   
   private
      # Using a private method to encapsulate the permissible parameters is just a good pattern

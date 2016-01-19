@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   resources :heart_rates, defaults: {format: :json} , except: :edit  
   resources :doctors, defaults: {format: :json} , except: :edit 
   resources :patients,  defaults: {format: :json} , except: :edit  
-  
+
+  get '/patients/userinfo/:id', to: 'users#show', as: 'show', defaults: {format: :json}     
   get '/patients/heartratelist/:id', to: 'patients#heart_rate_list', as: 'heart_rate_list', defaults: {format: :json} 
   get '/patients/incidentlist/:id', to: 'patients#incident_list', as: 'incident_list', defaults: {format: :json}   
-  get '/patients/userinfo/:id', to: 'users#show', as: 'show', defaults: {format: :json}   
+  get '/patients/doctorlist/:id', to: 'patients#doctor_list', as: 'doctor_list', defaults: {format: :json}     
+  post '/patients/adddoctor', to: 'patients#add_doctor', as: 'add_doctor', defaults: {format: :json}     
   
   # match '/patients/heartratelist' => 'patients_controller#heart_rate_list', :as => 'heart_rate_list'
    

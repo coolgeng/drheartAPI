@@ -1,3 +1,3 @@
-class Patient < ActiveRecord::Base
-  belongs_to :user
+class Incident < ActiveRecord::Base
+  belongs_to :patient
 end
