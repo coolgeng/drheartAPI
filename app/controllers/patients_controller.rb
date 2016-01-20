@@ -84,7 +84,17 @@ class PatientsController < ApplicationController
   end
   
   def add_doctor
+    @patient = Patient.find(params[:userid])
+    @doctor = Doctor.find(params[:doctorid])
     
+    @doctor.doctor_patients.create(:patient_id => @patient.id,:status => 0)
+    
+    if @doctor.save
+      render json: @patient, status: :created, location: @patient
+    else
+      render json: @patient.errors, status: :unprocessable_entity
+    end
+
     # @patient = Patient.new(params[:patient])
     #
     # if @patient.save

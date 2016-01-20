@@ -1,0 +1,2 @@
+collection @doctors
+attributes :id

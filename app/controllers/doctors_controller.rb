@@ -83,14 +83,28 @@ class DoctorsController < ApplicationController
     render json: @doctor.doctors
   end
   
-  def add_doctor
-    @doctor = Doctor.new(params[:doctor])    
+  def accept 
+    @patient = Patient.find(params[:patientid])
+    @doctor = Doctor.find(params[:userid])    
+    
+    @doctor_patients = @doctor.doctor_patients
+    @doctor_patients.update_all(:status => params[:accept] == 1 ? 1 : -1)
+    # @doctor.doctor_patients.create(:patient_id => @patient.id,:status => @accept == 1 ? 1 : -1)
+    # @doctor.doctor_patients.
     
     if @doctor.save
-      render json: @doctor, status: :created, location: @doctor
+      render json: @patient, status: :created, location: @patient
     else
-      render json: @doctor.errors, status: :unprocessable_entity
+      render json: @patient.errors, status: :unprocessable_entity
     end
+    
+    # @doctor = Doctor.new(params[:doctor])
+    #
+    # if @doctor.save
+    #   render json: @doctor, status: :created, location: @doctor
+    # else
+    #   render json: @doctor.errors, status: :unprocessable_entity
+    # end
     
   end
   
