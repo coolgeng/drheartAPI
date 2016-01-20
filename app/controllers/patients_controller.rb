@@ -1,3 +1,5 @@
+require 'json'
+
 class PatientsController < ApplicationController
   include ActionController::MimeResponds
   include ActionController::Helpers
@@ -104,6 +106,21 @@ class PatientsController < ApplicationController
     # end
     
   end
+  
+  def upload_heartrate
+    @patient = Patient.find(params[:userid])
+    
+    @heart_rate_list = params[:heart_rate_list]
+    
+    my_json = JSON.parse(@heart_rate_list)
+    
+    my_json['heart_rate_list'].each do |heart_rate|
+      @heart_rate = HeartRate.new(user_id: @patient.id, patient_id: @patient.id, rate: heart_rate['hr'], updated_at: heart_rate['t'])
+      @heart_rate.save
+    end
+    
+  end
+  
   
   private
      # Using a private method to encapsulate the permissible parameters is just a good pattern
