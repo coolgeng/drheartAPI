@@ -93,7 +93,7 @@ class DoctorsController < ApplicationController
   
   
   def accept 
-    @patient = Patient.find(params[:patientid])
+    @patient = Patient.find(params[:patient_id])
     @doctor = Doctor.find(params[:userid])    
     
     @doctor_patients = @doctor.doctor_patients

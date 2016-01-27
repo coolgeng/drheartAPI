@@ -1,2 +1,2 @@
-collection @doctors
-attributes :id
+node(:error_code) {0}
+node(:msg) {""}
