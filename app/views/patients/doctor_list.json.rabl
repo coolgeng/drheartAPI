@@ -1,3 +1,7 @@
-collection @patients
-attributes :id, :name, :phone, :avatar, :sex, :age
-child(:doctor) {attributes :name}
+object @patient => :patient
+
+child :doctor_patient do
+  attributes :docotor_id, :status, :name, :id
+end
+
+extends "error"

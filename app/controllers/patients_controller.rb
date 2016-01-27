@@ -21,9 +21,10 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show    
-    @patient = Patient.find(params[:id])
+    @patient = Patient.find(params[:userid])
     
-    render json: @patient
+    # render json: @patient
+    render "patients/show"
   end
 
   # GET /patients/new
@@ -49,7 +50,7 @@ class PatientsController < ApplicationController
   # PATCH/PUT /patients/1
   # PATCH/PUT /patients/1.json
   def update
-    @patient = Patient.find(params[:id])
+    @patient = Patient.find(params[:userid])
 
     if @patient.update_attributes(params[:patient])
       head :no_content
@@ -61,28 +62,34 @@ class PatientsController < ApplicationController
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy
-    @patient = Patient.find(params[:id])
+    @patient = Patient.find(params[:userid])
     @patient.destroy
 
     head :no_content
   end
   
   def heart_rate_list
-    @patient = Patient.find(params[:id])
+    @patient = Patient.find(params[:userid])
     
-    render json: @patient.heart_rate
+    # render json: @patient.heart_rate
+    render "patients/heart_rate_list"
   end
   
   def incident_list
-    @patient = Patient.find(params[:id])
+    @patient = Patient.find(params[:userid])
     
-    render json: @patient.incident
+    # render json: @patient.incident 
+    render "patients/incident_list"
   end
     
   def doctor_list
-    @patient = Patient.find(params[:id])
+    @patient = Patient.find(params[:userid])
     
-    render json: @patient.doctors
+    p "---------" 
+    p @patient.doctors
+      p "---------"   
+    # render json: @patient.doctors
+    render "patients/doctor_list"
   end
   
   def add_doctor

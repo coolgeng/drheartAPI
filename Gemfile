@@ -11,6 +11,8 @@ gem 'mysql2', '~> 0.3.18'
 
 gem 'rabl'
 
+gem 'oj'
+
 gem 'responders'
 
 gem 'json'
