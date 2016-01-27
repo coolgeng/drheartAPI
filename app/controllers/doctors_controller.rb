@@ -19,9 +19,9 @@ class DoctorsController < ApplicationController
   # GET /doctors/1
   # GET /doctors/1.json
   def show    
-    @doctor = Doctor.find(params[:id])
+    @doctor = Doctor.find(params[:userid])
     
-    render json: @doctor
+    render "doctors/show"
   end
 
   # GET /doctors/new
@@ -47,7 +47,7 @@ class DoctorsController < ApplicationController
   # PATCH/PUT /doctors/1
   # PATCH/PUT /doctors/1.json
   def update
-    @doctor = Doctor.find(params[:id])
+    @doctor = Doctor.find(params[:userid])
 
     if @doctor.update_attributes(params[:doctor])
       head :no_content
@@ -59,29 +59,38 @@ class DoctorsController < ApplicationController
   # DELETE /doctors/1
   # DELETE /doctors/1.json
   def destroy
-    @doctor = Doctor.find(params[:id])
+    @doctor = Doctor.find(params[:userid])
     @doctor.destroy
 
     head :no_content
   end
   
-  def heart_rate_list
-    @doctor = Doctor.find(params[:id])
-    
-    render json: @doctor.heart_rate
-  end
   
   def incident_list
-    @doctor = Doctor.find(params[:id])
+    @doctor = Doctor.find(params[:userid])
     
-    render json: @doctor.incident
+    render "doctors/patient_list"
   end
     
-  def doctor_list
-    @doctor = Doctor.find(params[:id])
+  def patient_list
+    @doctor = Doctor.find(params[:userid])
     
-    render json: @doctor.doctors
+    render "doctors/patient_list"
   end
+  
+  
+  def treat
+    @doctor = Doctor.find(params[:userid])
+    @incident = Incident.find(params[:incident_id])
+    begin
+      @incident.update_attribute(:treat, params[:treat])
+        render "doctors/treat"      
+    rescue ActiveRecord::ActiveRecordError
+      render "error"      
+    end
+    
+  end
+  
   
   def accept 
     @patient = Patient.find(params[:patientid])
@@ -92,12 +101,13 @@ class DoctorsController < ApplicationController
     # @doctor.doctor_patients.create(:patient_id => @patient.id,:status => @accept == 1 ? 1 : -1)
     # @doctor.doctor_patients.
     
-    if @doctor.save
-      render json: @patient, status: :created, location: @patient
-    else
-      render json: @patient.errors, status: :unprocessable_entity
+    begin 
+      @doctor.save
+      rescue ActiveRecord::ActiveRecordError
+        render "error"
     end
     
+      render "doctors/accept"
     # @doctor = Doctor.new(params[:doctor])
     #
     # if @doctor.save

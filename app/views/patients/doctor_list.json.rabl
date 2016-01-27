@@ -1,7 +1,8 @@
+
 object @patient => :patient
 
-child :doctor_patient do
-  attributes :docotor_id, :status, :name, :id
+node :doctors do |doctor|
+  doctor.doctors.to_a.map { |m| {:name => m.name, :id => m.id}}
 end
 
-extends "error"
+extends "success"

@@ -83,11 +83,8 @@ class PatientsController < ApplicationController
   end
     
   def doctor_list
-    @patient = Patient.find(params[:userid])
+    @patient = Patient.find(params[:userid])    
     
-    p "---------" 
-    p @patient.doctors
-      p "---------"   
     # render json: @patient.doctors
     render "patients/doctor_list"
   end
@@ -96,13 +93,18 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:userid])
     @doctor = Doctor.find(params[:doctorid])
     
-    @doctor.doctor_patients.create(:patient_id => @patient.id,:status => 0)
-    
-    if @doctor.save
-      render json: @patient, status: :created, location: @patient
-    else
-      render json: @patient.errors, status: :unprocessable_entity
+    begin
+      @doctor.doctor_patients.create(:patient_id => @patient.id,:status => 0)
+
+      if @doctor.save
+        render "patients/add_doctor"
+      end
+      
+      rescue ActiveRecord::RecordNotUnique
+
+        render "error"
     end
+    
 
     # @patient = Patient.new(params[:patient])
     #
@@ -121,11 +123,17 @@ class PatientsController < ApplicationController
     
     my_json = JSON.parse(@heart_rate_list)
     
-    my_json['heart_rate_list'].each do |heart_rate|
-      @heart_rate = HeartRate.new(user_id: @patient.id, patient_id: @patient.id, rate: heart_rate['hr'], updated_at: heart_rate['t'])
-      @heart_rate.save
+    begin 
+      my_json['heart_rate_list'].each do |heart_rate|
+        @heart_rate = HeartRate.new(user_id: @patient.id, patient_id: @patient.id, rate: heart_rate['hr'], occurring_time: heart_rate['t'])
+        @heart_rate.save
+      end
+    rescue ActiveRecord::ActiveRecordError
+      render "error"
     end
     
+      render "patients/upload_heartrate"      
+      
   end
   
   

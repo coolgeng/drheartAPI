@@ -4,4 +4,4 @@ child :heart_rate do
   attributes :rate, :occurring_time
 end
 
-extends "error"
+extends "success"
