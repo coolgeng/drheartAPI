@@ -3,22 +3,66 @@ Rails.application.routes.draw do
   # resources :heart_rates, defaults: {format: :json} , except: :edit
   # resources :doctors, defaults: {format: :json} , except: :edit
   # resources :patients,  defaults: {format: :json} , except: :edit
-
-  post '/v1/patient/userinfo', to: 'patients#show', defaults: {format: :json}
-  post '/v1/patient/incidentlist', to: 'patients#incident_list',  defaults: {format: :json}  
-  post '/v1/patient/heartratelist', to: 'patients#heart_rate_list',  defaults: {format: :json}  
-  post '/v1/patient/doctorlist', to: 'patients#doctor_list',  defaults: {format: :json}
-  post '/v1/patient/adddoctor', to: 'patients#add_doctor',  defaults: {format: :json}
-  post '/v1/patient/removedoctor', to: 'patients#remove_doctor',  defaults: {format: :json}
-  post '/v1/patient/searchdoctor', to: 'patients#search_doctor',  defaults: {format: :json}
-  post '/v1/patient/uploadheartrate', to: 'patients#upload_heartrate', defaults: {format: :json}
+  namespace :v1  do
+    namespace :user do
+      post 'login', to: 'users#login', defaults: {format: :json}
+      post 'loginbytoken', to: 'users#loginbytoken', defaults: {format: :json}
+      post 'resetpassword', to: 'users#resetpassword', defaults: {format: :json}
+      post 'messagelist', to: 'users#messagelist', defaults: {format: :json}
+      post 'getverifycode', to: 'users#getverifycode', defaults: {format: :json}
+      post 'uploadavatar', to: 'users#uploadavatar', defaults: {format: :json}          
+    end
+  end
   
-
-  post '/v1/doctor/userinfo', to: 'doctors#show', defaults: {format: :json}
-  post '/v1/doctor/incidentlist', to: 'doctors#incident_list', defaults: {format: :json}
-  post '/v1/doctor/treat', to: 'doctors#treat', defaults: {format: :json}  
-  post '/v1/doctor/patientlist', to: 'doctors#patient_list',  defaults: {format: :json}  
-  post '/v1/doctor/accept', to: 'doctors#accept', defaults: {format: :json}    
+  namespace :v1  do
+    namespace :patient do
+      post 'register', to: 'patients#register', defaults: {format: :json}
+      post 'userinfo', to: 'patients#show', defaults: {format: :json}
+      post 'incidentlist', to: 'patients#incident_list',  defaults: {format: :json}  
+      post 'heartratelist', to: 'patients#heart_rate_list',  defaults: {format: :json}  
+      post 'doctorlist', to: 'patients#doctor_list',  defaults: {format: :json}
+      post 'adddoctor', to: 'patients#add_doctor',  defaults: {format: :json}
+      post 'removedoctor', to: 'patients#remove_doctor',  defaults: {format: :json}
+      post 'searchdoctor', to: 'patients#search_doctor',  defaults: {format: :json}
+      post 'uploadheartrate', to: 'patients#upload_heartrate', defaults: {format: :json}      
+    end
+  end
+  
+  
+  namespace :v1  do
+    namespace :doctor do
+      post 'register', to: 'doctors#register', defaults: {format: :json}    
+      post 'userinfo', to: 'doctors#show', defaults: {format: :json}
+      post 'incidentlist', to: 'doctors#incident_list', defaults: {format: :json}
+      post 'treat', to: 'doctors#treat', defaults: {format: :json}  
+      post 'patientlist', to: 'doctors#patient_list',  defaults: {format: :json}  
+      post 'accept', to: 'doctors#accept', defaults: {format: :json}          
+    end
+  end
+  
+  # post '/v1/user/login', to: 'users#login', defaults: {format: :json}
+  # post '/v1/user/loginbytoken', to: 'users#loginbytoken', defaults: {format: :json}
+  # post '/v1/user/resetpassword', to: 'users#resetpassword', defaults: {format: :json}
+  # post '/v1/user/messagelist', to: 'users#messagelist', defaults: {format: :json}
+  # post '/v1/user/getverifycode', to: 'users#getverifycode', defaults: {format: :json}
+  # post '/v1/user/uploadavatar', to: 'users#uploadavatar', defaults: {format: :json}
+      
+  # post '/v1/patient/register', to: 'patients#register', defaults: {format: :json}
+  # post '/v1/patient/userinfo', to: 'patients#show', defaults: {format: :json}
+  # post '/v1/patient/incidentlist', to: 'patients#incident_list',  defaults: {format: :json}
+  # post '/v1/patient/heartratelist', to: 'patients#heart_rate_list',  defaults: {format: :json}
+  # post '/v1/patient/doctorlist', to: 'patients#doctor_list',  defaults: {format: :json}
+  # post '/v1/patient/adddoctor', to: 'patients#add_doctor',  defaults: {format: :json}
+  # post '/v1/patient/removedoctor', to: 'patients#remove_doctor',  defaults: {format: :json}
+  # post '/v1/patient/searchdoctor', to: 'patients#search_doctor',  defaults: {format: :json}
+  # post '/v1/patient/uploadheartrate', to: 'patients#upload_heartrate', defaults: {format: :json}
+  
+  # post '/v1/doctor/register', to: 'doctors#register', defaults: {format: :json}
+  # post '/v1/doctor/userinfo', to: 'doctors#show', defaults: {format: :json}
+  # post '/v1/doctor/incidentlist', to: 'doctors#incident_list', defaults: {format: :json}
+  # post '/v1/doctor/treat', to: 'doctors#treat', defaults: {format: :json}
+  # post '/v1/doctor/patientlist', to: 'doctors#patient_list',  defaults: {format: :json}
+  # post '/v1/doctor/accept', to: 'doctors#accept', defaults: {format: :json}
     
   
   # match '/patients/heartratelist' => 'patients_controller#heart_rate_list', :as => 'heart_rate_list'
