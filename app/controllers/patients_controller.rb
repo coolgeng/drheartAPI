@@ -136,6 +136,15 @@ class PatientsController < ApplicationController
       
   end
   
+  def search_doctor
+    
+    @patient = Patient.find(params[:userid])
+    
+    @doctors = @patient.doctors.search(params[:keyword])
+    
+    render "patients/search_doctor"
+  end
+  
   
   private
      # Using a private method to encapsulate the permissible parameters is just a good pattern
