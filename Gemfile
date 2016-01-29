@@ -17,6 +17,12 @@ gem 'responders'
 
 gem 'json'
 
+gem 'unicorn'
+
+gem 'rack-handlers'
+
+gem 'unicorn-rails'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

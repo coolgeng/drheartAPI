@@ -51,10 +51,10 @@ ActiveRecord::Schema.define(version: 20160127070624) do
   add_index "doctors_patients", ["patient_id"], name: "index_doctors_patients_on_patient_id", using: :btree
 
   create_table "heart_rates", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4
     t.integer  "rate",           limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "user_id",        limit: 4
     t.integer  "patient_id",     limit: 4
     t.integer  "occurring_time", limit: 8
   end
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20160127070624) do
     t.string   "desp",           limit: 255
     t.string   "treat",          limit: 255
     t.integer  "state",          limit: 4
+    t.integer  "time",           limit: 4
     t.integer  "occurring_time", limit: 8
   end
 
