@@ -124,7 +124,7 @@ class PatientsController < ApplicationController
     my_json = JSON.parse(@heart_rate_list)
     
     begin 
-      my_json['heart_rate_list'].each do |heart_rate|
+      my_json.each do |heart_rate|
         @heart_rate = HeartRate.new(user_id: @patient.id, patient_id: @patient.id, rate: heart_rate['hr'], occurring_time: heart_rate['t'])
         @heart_rate.save
       end
