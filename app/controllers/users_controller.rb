@@ -87,11 +87,11 @@ class UsersController < ApplicationController
 
   def login
     @user = User.authenticate(params[:phone], params[:password])
-    if @user
+    if @user.nil?
       # session[:user_id] = user.id
-      render "users/login_success"
+      render "users/login_error"      
     else
-      render "users/login_error"
+      render "users/login_success"
     end  
   end
 
