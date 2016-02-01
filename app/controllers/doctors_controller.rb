@@ -19,7 +19,7 @@ class DoctorsController < ApplicationController
   # GET /doctors/1
   # GET /doctors/1.json
   def show    
-    @doctor = Doctor.find(params[:userid])
+    @doctor = Doctor.find_by_user_id(params[:userid])
     
     render "doctors/show"
   end
@@ -47,7 +47,7 @@ class DoctorsController < ApplicationController
   # PATCH/PUT /doctors/1
   # PATCH/PUT /doctors/1.json
   def update
-    @doctor = Doctor.find(params[:userid])
+    @doctor = Doctor.find_by_user_id(params[:userid])
 
     if @doctor.update_attributes(params[:doctor])
       head :no_content
@@ -67,20 +67,20 @@ class DoctorsController < ApplicationController
   
   
   def incident_list
-    @doctor = Doctor.find(params[:userid])
+    @doctor = Doctor.find_by_user_id(params[:userid])
     
     render "doctors/incident_list"
   end
     
   def patient_list
-    @doctor = Doctor.find(params[:userid])
+    @doctor = Doctor.find_by_user_id(params[:userid])
     
     render "doctors/patient_list"
   end
   
   
   def treat
-    @doctor = Doctor.find(params[:userid])
+    @doctor = Doctor.find_by_user_id(params[:userid])
     @incident = Incident.find(params[:incident_id])
     begin
       @incident.update_attribute(:treat, params[:treat])
@@ -93,8 +93,8 @@ class DoctorsController < ApplicationController
   
   
   def accept 
-    @patient = Patient.find(params[:patient_id])
-    @doctor = Doctor.find(params[:userid])    
+    @patient = Patient.find_by_user_id(params[:patient_id])
+    @doctor = Doctor.find_by_user_id(params[:userid])    
     
     @doctor_patients = @doctor.doctor_patients
     @doctor_patients.update_all(:status => params[:accept] == 1 ? 1 : -1)

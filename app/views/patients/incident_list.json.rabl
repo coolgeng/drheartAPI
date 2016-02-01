@@ -1,9 +1,5 @@
-object @patient => :patient
-# attributes :state, :time, :desp, :doctor, :treat
+collection @incidents => :incident_list
+attributes :status, :time, :desp, :doctor_id, :treat, :state, :occurring_time
 
-child :incident do
-  attributes :status, :time, :desp, :doctor_id, :treat, :state, :occurring_time
-end
-
-
-extends "success"
+node(:error_code) {0}
+node(:msg) {""}

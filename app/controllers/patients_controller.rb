@@ -21,7 +21,7 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show    
-    @patient = Patient.find(params[:userid])
+    @patient = Patient.find_by_user_id(params[:userid])
     
     # render json: @patient
     render "patients/show"
@@ -69,28 +69,34 @@ class PatientsController < ApplicationController
   end
   
   def heart_rate_list
-    @patient = Patient.find(params[:userid])
+    @patient = Patient.find_by_user_id(params[:userid])
     
     # render json: @patient.heart_rate
     render "patients/heart_rate_list"
   end
   
   def incident_list
-    @patient = Patient.find(params[:userid])
+    @incidents = Incident.where(patient_id: params[:userid])
+    # if @patient.nil?
+    #
+    # else
+    #   @incident = Incident.find_by_patient_id(@patient.user_id)
+    #
+    # end
     
     # render json: @patient.incident 
     render "patients/incident_list"
   end
     
   def doctor_list
-    @patient = Patient.find(params[:userid])    
-    
+    @patient = Patient.where(user_id: params[:userid])   
+
     # render json: @patient.doctors
-    render "patients/doctor_list"
+      render "patients/doctor_list"        
   end
   
   def add_doctor
-    @patient = Patient.find(params[:userid])
+    @patient = Patient.find_by_user_id(params[:userid])
     @doctor = Doctor.find(params[:doctorid])
     
     begin
@@ -117,15 +123,18 @@ class PatientsController < ApplicationController
   end
   
   def upload_heartrate
-    @patient = Patient.find(params[:userid])
+    @patient = Patient.where(user_id: params[:userid]).limit(1)
     
-    @heart_rate_list = params[:heart_rates]
+    user_id = @patient.first.user_id
+    id = @patient.first.id
+    
+    @heart_rate_list = params[:heart_rate_list]
     
     my_json = JSON.parse(@heart_rate_list)
     
     begin 
       my_json.each do |heart_rate|
-        @heart_rate = HeartRate.new(user_id: @patient.id, patient_id: @patient.id, rate: heart_rate['hr'], occurring_time: heart_rate['t'])
+        @heart_rate = HeartRate.new(user_id: user_id, patient_id: id, rate: heart_rate['hr'], occurring_time: heart_rate['t'])
         @heart_rate.save
       end
     rescue ActiveRecord::ActiveRecordError
@@ -138,7 +147,7 @@ class PatientsController < ApplicationController
   
   def search_doctor
     
-    @patient = Patient.find(params[:userid])
+    @patient = Patient.find_by_user_id(params[:userid])
     
     @doctors = @patient.doctors.search(params[:keyword])
     
@@ -151,6 +160,6 @@ class PatientsController < ApplicationController
      # since you'll be able to reuse the same permit list between create and update. Also, you
      # can specialize this method with per-patient checking of permissible attributes.
      def patient_params
-       params.require(:patient).permit(:name, :sex, :age, :phone, :avatar)
+       params.require(:patient).permit(:name, :sex, :age, :phone, :avatar, :user_id, :id)
      end
 end
