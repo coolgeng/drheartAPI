@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     @user = User.find_by_phone(params[:phone])
     
     if @user
-      render "register_error"
+      render "users/register_error"
     else 
       @user = User.new(:phone => params[:phone], :password_digest => params[:password])
     
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
         @patient = Patient.new(:user_id => @user.id, :phone => params[:phone], :name => params[:name], :age => params[:age], :sex => params[:sex])
       
         @patient.save
-        render "users/register"
+        render "users/success"
       rescue ActiveRecord::RecordNotUnique
         render "error"
       end          
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
     @user = User.find_by_phone(params[:phone])
     
     if @user
-      render "register_error"
+      render "users/register_error"
     else 
       @user = User.new(:phone => params[:phone], :password_digest => params[:password])
     
@@ -78,11 +78,21 @@ class UsersController < ApplicationController
         @doctor = Doctor.new(:user_id => @user.id, :phone => params[:phone], :name => params[:name], :hospital => params[:hospital], :sector => params[:sector], :position => params[:position])
       
         @doctor.save
-        render "users/register"
+        render "users/success"
       rescue ActiveRecord::RecordNotUnique
         render "error"
       end          
     end
+  end
+
+  def login
+    @user = User.authenticate(params[:phone], params[:password])
+    if @user
+      # session[:user_id] = user.id
+      render "users/login_success"
+    else
+      render "users/login_error"
+    end  
   end
 
   def create_session
@@ -123,6 +133,10 @@ class UsersController < ApplicationController
   #   render json: @user.heart_rates
   # end
   
+  
+  def loginbytoken
+    render "users/success"    
+  end
     
   private
      # Using a private method to encapsulate the permissible parameters is just a good pattern
