@@ -47,8 +47,10 @@ Rails.application.routes.draw do
   post '/v1/user/messagelist', to: 'users#messagelist', defaults: {format: :json}
   post '/v1/user/getverifycode', to: 'users#getverifycode', defaults: {format: :json}
   post '/v1/user/uploadavatar', to: 'users#uploadavatar', defaults: {format: :json}
-
-  post '/v1/patient/register', to: 'patients#register', defaults: {format: :json}
+  post '/v1/patient/register', to: 'users#register_patient', defaults: {format: :json}  
+  post '/v1/doctor/register', to: 'users#register_doctor', defaults: {format: :json}
+  
+  
   post '/v1/patient/userinfo', to: 'patients#show', defaults: {format: :json}
   post '/v1/patient/incidentlist', to: 'patients#incident_list',  defaults: {format: :json}
   post '/v1/patient/heartratelist', to: 'patients#heart_rate_list',  defaults: {format: :json}
@@ -58,7 +60,7 @@ Rails.application.routes.draw do
   post '/v1/patient/searchdoctor', to: 'patients#search_doctor',  defaults: {format: :json}
   post '/v1/patient/uploadheartrate', to: 'patients#upload_heartrate', defaults: {format: :json}
 
-  post '/v1/doctor/register', to: 'doctors#register', defaults: {format: :json}
+
   post '/v1/doctor/userinfo', to: 'doctors#show', defaults: {format: :json}
   post '/v1/doctor/incidentlist', to: 'doctors#incident_list', defaults: {format: :json}
   post '/v1/doctor/treat', to: 'doctors#treat', defaults: {format: :json}

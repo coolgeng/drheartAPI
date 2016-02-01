@@ -69,7 +69,7 @@ class DoctorsController < ApplicationController
   def incident_list
     @doctor = Doctor.find(params[:userid])
     
-    render "doctors/patient_list"
+    render "doctors/incident_list"
   end
     
   def patient_list

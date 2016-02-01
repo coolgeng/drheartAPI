@@ -43,6 +43,59 @@ class UsersController < ApplicationController
     end
   end
 
+  def register_patient  
+    @user = User.find_by_phone(params[:phone])
+    
+    if @user
+      render "register_error"
+    else 
+      @user = User.new(:phone => params[:phone], :password_digest => params[:password])
+    
+      begin      
+        @user.save
+      
+        @patient = Patient.new(:user_id => @user.id, :phone => params[:phone], :name => params[:name], :age => params[:age], :sex => params[:sex])
+      
+        @patient.save
+        render "users/register"
+      rescue ActiveRecord::RecordNotUnique
+        render "error"
+      end          
+    end
+  end
+
+  def register_doctor
+    @user = User.find_by_phone(params[:phone])
+    
+    if @user
+      render "register_error"
+    else 
+      @user = User.new(:phone => params[:phone], :password_digest => params[:password])
+    
+      begin      
+        @user.save
+      
+        @doctor = Doctor.new(:user_id => @user.id, :phone => params[:phone], :name => params[:name], :hospital => params[:hospital], :sector => params[:sector], :position => params[:position])
+      
+        @doctor.save
+        render "users/register"
+      rescue ActiveRecord::RecordNotUnique
+        render "error"
+      end          
+    end
+  end
+
+  def create_session
+    
+    if user
+      session[:user_id] = user.id
+      render "users/register"
+    else
+      flash.now.alert = "Invalid email or password"
+      render "new"
+    end
+  end
+
   # PATCH/PUT /Users/1
   # PATCH/PUT /Users/1.json
   def update

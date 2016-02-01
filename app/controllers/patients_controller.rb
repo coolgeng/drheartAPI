@@ -119,7 +119,7 @@ class PatientsController < ApplicationController
   def upload_heartrate
     @patient = Patient.find(params[:userid])
     
-    @heart_rate_list = params[:heart_rate_list]
+    @heart_rate_list = params[:heart_rates]
     
     my_json = JSON.parse(@heart_rate_list)
     
