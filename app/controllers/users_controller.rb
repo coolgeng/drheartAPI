@@ -86,7 +86,9 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user = User.authenticate(params[:phone], params[:password])
+    @user = User.authenticate(params[:phone], params[:password])    
+    p '--------------------------- User info: -----------------------'
+    p @user
     if @user.nil?
       # session[:user_id] = user.id
       render "users/login_error"      
