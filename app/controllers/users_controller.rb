@@ -49,12 +49,12 @@ class UsersController < ApplicationController
     if @user
       render "users/register_error"
     else 
-      @user = User.new(:phone => params[:phone], :password_digest => params[:password])
+      @user = User.new(:phone => params[:phone], :password_digest => params[:password], :user_type => 0)
     
       begin      
         @user.save
       
-        @patient = Patient.new(:user_id => @user.id, :phone => params[:phone], :name => params[:name], :age => params[:age], :sex => params[:sex])
+        @patient = Patient.new(:user_id => @user.id, :phone => params[:phone], :name => params[:name], :age => params[:age], :sex => params[:sex] )
       
         @patient.save
         render "users/success"
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
     if @user
       render "users/register_error"
     else 
-      @user = User.new(:phone => params[:phone], :password_digest => params[:password])
+      @user = User.new(:phone => params[:phone], :password_digest => params[:password], :user_type => 1)
     
       begin      
         @user.save
@@ -85,6 +85,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def getverifycode
+    # TODO
+    render "users/getverifycode" 
+  end
+  
+  def reset_password
+    @user = User.verify_by_phone(params[:phone], params[:verify_code])
+    
+    p '------------'
+    p @user
+    if @user.update(:password_digest, params[:password])      
+      # User.update_password_by_phone(params[:phone], params[:password])
+      render "users/reset_password"      
+    else
+      render "users/reset_password_error"
+    end
+  end
+  
   def login
     @user = User.authenticate(params[:phone], params[:password])    
     p '--------------------------- User info: -----------------------'
@@ -92,7 +110,7 @@ class UsersController < ApplicationController
     if @user.nil?
       # session[:user_id] = user.id
       render "users/login_error"      
-    else
+    else      
       render "users/login_success"
     end  
   end

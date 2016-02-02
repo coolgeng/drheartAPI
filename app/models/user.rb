@@ -14,6 +14,15 @@ class User < ActiveRecord::Base
       nil
     end
   end
+  
+  def self.verify_by_phone(phone, verifycode)
+    user = User.where(phone: phone).limit(1)
+  end
+  
+  def self.update_password_by_phone(phone, password)
+    user = find_by_phone(phone)
+    @user.update_attributes(params[:password_digest] => password)
+  end
         
   def encrypt_password
      if password_digest.present?
