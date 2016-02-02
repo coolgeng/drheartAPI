@@ -1,4 +1,5 @@
 object @user => :user
-attributes :id, :token => "$2a$10$gorePwfAKqfKXUCw7frDwu"
+attributes :id => :userid
+node(:token) {"$2a$10$gorePwfAKqfKXUCw7frDwu"}
 
 extends "success"
