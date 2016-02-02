@@ -1,5 +1,7 @@
-collection @incidents => :incident_list
-attributes :status, :time, :desp, :doctor_id, :treat, :state, :occurring_time
+object false
 
-node(:error_code) {0}
-node(:msg) {""}
+child(@incidents => :incident_list) do
+	attributes :status, :time, :desp, :doctor_id, :treat, :state, :occurring_time
+end
+
+extends "success"
