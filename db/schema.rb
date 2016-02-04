@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202080742) do
+ActiveRecord::Schema.define(version: 20160204065718) do
 
   create_table "activities", id: false, force: :cascade do |t|
     t.string  "Date",                              limit: 255
@@ -322,6 +322,16 @@ ActiveRecord::Schema.define(version: 20160202080742) do
     t.float   "Risk_Score_HCC_Disease_Interaction",         limit: 24,  null: false
     t.float   "Risk_Score_HCC_Claims_Total",                limit: 24,  null: false
   end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "patient_id",    limit: 4
+    t.string   "content",       limit: 255
+    t.integer  "occurringTime", limit: 8
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "messages", ["patient_id"], name: "index_messages_on_patient_id", using: :btree
 
   create_table "patient_doctors", id: false, force: :cascade do |t|
     t.integer  "patient_id", limit: 4
