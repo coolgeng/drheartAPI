@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204065718) do
+ActiveRecord::Schema.define(version: 20160204070516) do
 
   create_table "activities", id: false, force: :cascade do |t|
     t.string  "Date",                              limit: 255
@@ -329,9 +329,13 @@ ActiveRecord::Schema.define(version: 20160204065718) do
     t.integer  "occurringTime", limit: 8
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "user_id",       limit: 4
+    t.integer  "doctor_id",     limit: 4
   end
 
+  add_index "messages", ["doctor_id"], name: "index_messages_on_doctor_id", using: :btree
   add_index "messages", ["patient_id"], name: "index_messages_on_patient_id", using: :btree
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "patient_doctors", id: false, force: :cascade do |t|
     t.integer  "patient_id", limit: 4
