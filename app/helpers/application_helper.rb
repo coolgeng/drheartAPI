@@ -1,22 +1,14 @@
-class Message
+module ApplicationHelper
   require 'net/http'
   require 'uri'
   params = {}
 
-
   #修改为您的apikey.可在官网（http://www.yuanpian.com)登录后用户中心首页看到
   apikey = '3fd0346b9953fe923baea3358f4e6b8f'
   #修改为您要发送的手机号码，多个号码用逗号隔开
-  # 13480687812
-  # 13067930550
-  mobile = '13480687812'
   #修改为您要发送的短信内容 
   
-  number = rand(5 ** 5)
-  p "number is =========" 
-  p number
-  
-  text = '【好安心】您的验证码是' << number
+  text = '【好安心】您的验证码是'
   
   #查询账户信息HTTP地址
   get_user_info_uri = URI.parse('https://sms.yunpian.com/v1/user/get.json')
@@ -32,28 +24,35 @@ class Message
   # response =  Net::HTTP.post_form(get_user_info_uri,params)
   # print response.body + "\n"
 
-  params['mobile'] = mobile
   params['text'] = text
   #智能匹配模板发送
-  # response = Net::HTTP.post_form(send_sms_uri,params)
-  # print '========='
-  # print response.body + "\n"
-  # print '========='
   #指定模板发送
   #设置模板ID，如使用1号模板:【#company#】您的验证码是#code#
   #设置对应的模板变量值
 
   params['tpl_id'] = 1234885
   # params['tpl_value'] = URI::escape('#code#')+'='+URI::escape('1234')
-  params['tpl_value'] = URI::escape('#code#')+'='+URI::escape(number.to_s)  
-  response = Net::HTTP.post_form(send_tpl_sms_uri,params)
-  print '--------'
-  print response.body + "\n"
-  print '--------'  
-  #发送语音验证码
-  # params['code'] = 1234
-  # response = Net::HTTP.post_form(send_voice_uri,params)
-  # print '+++++++++'
-  # print response.body + "\n"
-  # print '+++++++++'
+  
+  def self.sendCode(mobile)
+    p "API send verification code to :"
+    p mobile
+    
+    params['mobile'] = mobile 
+    # params['text'] = text
+    # params['tpl_id'] = 1234885
+    number = rand(5 ** 5)
+    p "verification code is:"
+    p number
+    
+    params['tpl_value'] = URI::escape('#code#')+'='+URI::escape(number.to_s)  
+    response = Net::HTTP.post_form(send_tpl_sms_uri,params)
+    
+    print '--------'
+    print response.body + "\n"
+    print '--------'    
+    
+        
+  end
+  
+  
 end

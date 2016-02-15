@@ -44,8 +44,8 @@ Rails.application.routes.draw do
   post '/v1/user/login', to: 'users#login', defaults: {format: :json}
   post '/v1/user/loginbytoken', to: 'users#loginbytoken', defaults: {format: :json}
   post '/v1/user/resetpassword', to: 'users#reset_password', defaults: {format: :json}
-  post '/v1/user/messagelist', to: 'users#messagelist', defaults: {format: :json}
-  post '/v1/user/getverifycode', to: 'users#getverifycode', defaults: {format: :json}
+  post '/v1/user/messagelist', to: 'users#message_list', defaults: {format: :json}
+  post '/v1/user/getverifycode', to: 'users#get_verifycode', defaults: {format: :json}
   post '/v1/user/uploadavatar', to: 'users#uploadavatar', defaults: {format: :json}
   post '/v1/patient/register', to: 'users#register_patient', defaults: {format: :json}  
   post '/v1/doctor/register', to: 'users#register_doctor', defaults: {format: :json}

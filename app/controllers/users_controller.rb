@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   include ActionController::Helpers
   include ActionController::Cookies
   include ActionController::ImplicitRender
-
+  include ApplicationHelper
   
   # GET /users
   # GET /users.json
@@ -85,8 +85,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def getverifycode
-    # TODO
+  def get_verifycode
+    
     render "users/getverifycode" 
   end
   
@@ -157,6 +157,20 @@ class UsersController < ApplicationController
   def loginbytoken
     render "users/success"    
   end
+
+  def message_list
+    ApplicationHelper.test
+    render "users/message_list"
+  end
+
+  protected 
+  
+    def generate_token
+      self.token = loop do
+        random_token = SecureRandom.urlsafe_base64(nil, false)
+        break random_token unless ModelName.exists?(token: random_token)
+      end
+    end
     
   private
      # Using a private method to encapsulate the permissible parameters is just a good pattern
@@ -165,4 +179,5 @@ class UsersController < ApplicationController
      def user_params
        params.require(:user).permit(:id)
      end
+          
 end
