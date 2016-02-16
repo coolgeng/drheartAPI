@@ -76,6 +76,8 @@ class DoctorsController < ApplicationController
   def patient_list
     @doctor = Doctor.find_by_user_id(params[:userid])
     
+    @patients = @doctor.patients.select('patients.*, doctor_patients.status')
+    
     render "doctors/patient_list"
   end
   

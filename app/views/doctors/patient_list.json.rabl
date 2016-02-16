@@ -1,8 +1,8 @@
 
 object @doctor => :doctor
 
-node :patients do |patient|
-  patient.patients.to_a.map { |m| {:name => m.name, :id => m.id, :sex => m.sex, :age => m.age, :phone => m.phone}}
+child(@patients => :patient_list) do
+	extends	"doctors/patient"
 end
 
 extends "success"
