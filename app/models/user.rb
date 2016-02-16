@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_one :patient
   has_one :doctor
   has_one :session
-  
+  has_many :message, dependent: :destroy  
   before_save :encrypt_password
   
   include ApplicationHelper

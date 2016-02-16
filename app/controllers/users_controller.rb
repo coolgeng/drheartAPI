@@ -170,7 +170,9 @@ class UsersController < ApplicationController
   end
 
   def message_list
-    ApplicationHelper.test
+    @before = params[:after]
+    @message = Message.filter_by_time(params[:userid], params[:after])
+    
     render "users/message_list"
   end
 
