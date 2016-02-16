@@ -92,10 +92,10 @@ class UsersController < ApplicationController
   
   def reset_password
     @user = User.verify_by_phone(params[:phone], params[:verify_code])
-    
-    p '------------'
-    p @user
-    if @user.update(:password_digest, params[:password])      
+    print '--------------11111----------'
+    print @user
+        
+    if !@user.nil? && User.update(@user.id, password_digest: params[:password])      
       # User.update_password_by_phone(params[:phone], params[:password])
       render "users/reset_password"      
     else
