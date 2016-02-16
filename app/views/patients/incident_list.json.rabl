@@ -1,7 +1,9 @@
 object false
 
+node(:error_code) {0}
+node(:msg) {""}
+
 child(@incidents => :incident_list) do
-	attributes :status, :time, :desp, :doctor_id, :treat, :state, :occurring_time
+	extends 'patients/incident'
 end
 
-extends "success"
