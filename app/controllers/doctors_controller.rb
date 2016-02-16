@@ -48,12 +48,13 @@ class DoctorsController < ApplicationController
   # PATCH/PUT /doctors/1.json
   def update
     @doctor = Doctor.find_by_user_id(params[:userid])
-
-    if @doctor.update_attributes(params[:doctor])
-      head :no_content
+    
+    if !@doctor.nil? && Doctor.update(@doctor.id, hospital: params[:hospital], sector: params[:sector], position: params[:position])        
+      render "doctors/success"      
     else
-      render json: @doctor.errors, status: :unprocessable_entity
+      render "doctors/error"
     end
+    
   end
 
   # DELETE /doctors/1
@@ -91,6 +92,16 @@ class DoctorsController < ApplicationController
     
   end
   
+  def incidentnum
+    type = params[:type].downcase
+    if type == 'no'
+      @incident_num = Doctor.where("user_id = ? and state = 0 ", params[:userid]).first.incident.count
+    else
+      @incident_num = Doctor.where("user_id = ? ", params[:userid]).first.incident.count
+    end
+    
+    render "doctors/incidentnum"      
+  end
   
   def accept 
     @patient = Patient.find_by_user_id(params[:patient_id])

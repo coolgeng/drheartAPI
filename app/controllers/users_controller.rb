@@ -103,8 +103,6 @@ class UsersController < ApplicationController
   
   def reset_password
     @user = User.verify_by_phone(params[:phone], params[:verify_code])
-    print '--------------11111----------'
-    print @user
         
     if !@user.nil? && User.update(@user.id, password_digest: params[:password])      
       # User.update_password_by_phone(params[:phone], params[:password])
@@ -116,8 +114,7 @@ class UsersController < ApplicationController
   
   def login
     @user = User.authenticate(params[:phone], params[:password])    
-    p '--------------------------- User info: -----------------------'
-    p @user
+    
     if @user.nil?
       # session[:user_id] = user.id
       render "users/login_error"      
@@ -166,7 +163,7 @@ class UsersController < ApplicationController
   
   
   def loginbytoken
-    render "users/success"    
+    render "users/loginbytoken_success"
   end
 
   def message_list

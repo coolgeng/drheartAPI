@@ -66,6 +66,8 @@ Rails.application.routes.draw do
   post '/v1/doctor/treat', to: 'doctors#treat', defaults: {format: :json}
   post '/v1/doctor/patientlist', to: 'doctors#patient_list',  defaults: {format: :json}
   post '/v1/doctor/accept', to: 'doctors#accept', defaults: {format: :json}
+  post '/v1/doctor/incidentnum', to: 'doctors#incidentnum', defaults: {format: :json}    
+  post '/v1/doctor/modifyinfo', to: 'doctors#update', defaults: {format: :json}  
     
   
   # match '/patients/heartratelist' => 'patients_controller#heart_rate_list', :as => 'heart_rate_list'
