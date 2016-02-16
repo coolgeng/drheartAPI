@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
     end
   end
   
+  def self.find_by_phone(phone)
+    user = User.where(phone: phone).first
+  end  
+  
   def self.verify_by_phone(phone, verifycode)
     user = User.where(phone: phone, verify_code: verifycode).first
   end

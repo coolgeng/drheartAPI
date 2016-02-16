@@ -86,8 +86,19 @@ class UsersController < ApplicationController
   end
 
   def get_verifycode
+    phone = params[:phone]
     
-    render "users/getverifycode" 
+    @user = User.find_by_phone(phone)
+    
+    verify_code = ApplicationHelper.sendCode(phone)
+    # verify_code = rand(5 ** 5)
+    
+    if !@user.nil? && User.update(@user.id, verify_code: verify_code, verify_time: ApplicationHelper.now)      
+      render "users/getverifycode"       
+    else
+      render "users/getverifycode_error"
+    end
+
   end
   
   def reset_password
