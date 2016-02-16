@@ -1,2 +1,4 @@
 object @incident
-attributes :status, :time, :desp, :doctor_id, :treat, :state, :occurring_time, :patient_id
+attributes :id, :status, :time, :desp, :treat, :state, :patient_id
+
+node(:time) { |incidents| incidents.occurring_time }

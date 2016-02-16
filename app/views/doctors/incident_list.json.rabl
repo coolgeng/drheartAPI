@@ -1,11 +1,9 @@
-object @doctor => :doctor
-# attributes :state, :time, :desp, :doctor, :treat
+object false
 
-child(:incident => :incident_list, :object_root => :follow) do
+node(:error_code) {0}
+node(:msg) {""}
 
-# child (@incident, :root => :entries, :object_root => :follow) do
-  attributes :status, :time, :desp, :doctor_id, :treat, :state, :occurring_time, :patient_id
+child(@incidents => :incident_list) do
+	extends 'doctors/incident'
 end
 
-
-extends "success"
