@@ -22,7 +22,7 @@ class PatientsController < ApplicationController
   # GET /patients/1.json
   def show    
     @patient = Patient.find_by_user_id(params[:userid])
-    
+        
     # render json: @patient
     render "patients/show"
   end
