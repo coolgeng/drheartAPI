@@ -1,7 +1,9 @@
-object @patient => :patient
+object false
 
-node :doctors do |doctor|
-  doctor.doctors.to_a.map { |m| {:name => m.name, :id => m.id, :status => 0}}
+node(:error_code) {0}
+node(:msg) {""}
+
+child(@doctors => :doctor_list) do
+	extends 'patients/doctor'
 end
 
-extends "success"

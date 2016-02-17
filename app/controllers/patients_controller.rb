@@ -146,10 +146,14 @@ class PatientsController < ApplicationController
   end
   
   def search_doctor
-    
-    @patient = Patient.find_by_user_id(params[:userid])
-    
-    @doctors = @patient.doctors.search(params[:keyword])
+    keyword = params[:keyword]
+    @doctors = Patient.joins('left join doctor_patients on patients.id = doctor_patients.patient_id left join doctors on doctors.id = doctor_patients.doctor_id').select("doctors.*, doctor_patients.*").where("doctors.name like ?", "%#{keyword}%")
+      
+    # @patient = Patient.find_by_user_id(params[:userid])
+    # # where("name like ?", "%#{query}%")
+    # @patient.find(:all, joins: "left join `doctor_patients` on "
+    # 'patients.*, doctor_patients.status')
+    # @doctors = @patient.doctors.search(params[:keyword])
     
     render "patients/search_doctor"
   end

@@ -69,7 +69,7 @@ class DoctorsController < ApplicationController
   
   def incident_list
     @incidents = Incident.where(doctor_id: params[:userid])
-        
+
     render "doctors/incident_list"
   end
     
