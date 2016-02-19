@@ -68,8 +68,8 @@ class DoctorsController < ApplicationController
   
   
   def incident_list
-    @incidents = Incident.where(doctor_id: params[:userid])
-
+    # @incidents = Incident.where(doctor_id: params[:userid])
+    @incidents = Incident.joins('left join doctors on incidents.doctor_id = doctors.id left join patients on patients.id = incidents.patient_id').select("doctors.name as doctor_name, incidents.*, patients.* ").where("incidents.doctor_id = ?", params[:userid])
     render "doctors/incident_list"
   end
     
