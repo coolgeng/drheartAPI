@@ -75,8 +75,17 @@ class PatientsController < ApplicationController
     render "patients/heart_rate_list"
   end
   
-  def incident_list
-    @incidents = Incident.where(patient_id: params[:userid])
+  def incident_list    
+    @patient = Patient.where(user_id: params[:userid]).first
+    
+    if @patient.nil?
+      render "patients/error"
+    else
+      @incidents = Incident.joins('left join doctors on incidents.doctor_id = doctors.id left join patients on patients.id = incidents.patient_id').select("doctors.name as doctor_name, incidents.*, patients.* ").where("incidents.patient_id = ?", @patient.id)
+
+      render "patients/incident_list"   
+    end
+
     # if @patient.nil?
     #
     # else
@@ -85,7 +94,7 @@ class PatientsController < ApplicationController
     # end
     
     # render json: @patient.incident 
-    render "patients/incident_list"
+    
   end
     
   def doctor_list

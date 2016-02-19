@@ -1,4 +1,6 @@
 
-attributes :status, :time, :desp, :doctor_id, :treat, :state
+attributes :status, :time, :desp, :treat, :state
 
 node(:time) { |incidents| incidents.occurring_time }
+node(:doctor) { |incidents| incidents.doctor_name }
+
