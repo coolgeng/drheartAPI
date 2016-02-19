@@ -5,7 +5,9 @@ class Doctor < ActiveRecord::Base
   has_many :message, dependent: :destroy
     
   belongs_to :user
-  
+
+  enum sex: [:女, :男]
+    
   def self.search(query)
     where("name like ?", "%#{query}%")     
   end

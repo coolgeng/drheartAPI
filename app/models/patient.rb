@@ -6,5 +6,6 @@ class Patient < ActiveRecord::Base
   has_many :doctors, :through => :doctor_patients
   has_many :message, dependent: :destroy
   belongs_to :user
-  
+    
+  enum sex: [:女, :男]
 end

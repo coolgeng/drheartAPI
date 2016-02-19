@@ -173,6 +173,10 @@ class UsersController < ApplicationController
     render "users/message_list"
   end
 
+  def upload_avatar
+    render "users/success"
+  end
+
   protected 
   
     def generate_token
