@@ -1,6 +1,6 @@
 object false
 
-node(:before) {@before}
+node(:before) {@before.occurringTime}
 
 child(@message => :message_list) do
 	extends 'users/message'

@@ -167,7 +167,7 @@ class UsersController < ApplicationController
   end
 
   def message_list
-    @before = params[:after]
+    @before = Message.select("max(occurringTime) as occurringTime").first
     @message = Message.filter_by_time(params[:userid], params[:after])
     
     render "users/message_list"
