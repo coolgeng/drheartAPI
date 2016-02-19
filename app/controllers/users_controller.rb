@@ -167,7 +167,7 @@ class UsersController < ApplicationController
   end
 
   def message_list
-    @before = Message.select("max(occurringTime) as occurringTime").first
+    @before = Message.select("max(occurringTime) as occurringTime").where("user_id = ?" , params[:userid]).first
     @message = Message.filter_by_time(params[:userid], params[:after])
     
     render "users/message_list"
