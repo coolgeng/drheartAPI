@@ -103,7 +103,7 @@ class PatientsController < ApplicationController
     if @patient.nil?
       render "patients/error"
     else
-      @doctors = Doctor.joins("INNER JOIN `doctor_patients` ON `doctors`.`id` = `doctor_patients`.`doctor_id`").select("`doctors`.*").where("`doctor_patients`.`patient_id` = ?", @patient.id)
+      @doctors = Doctor.joins("INNER JOIN `doctor_patients` ON `doctors`.`id` = `doctor_patients`.`doctor_id`").select("`doctors`.*, `doctor_patients`.status as status").where("`doctor_patients`.`patient_id` = ?", @patient.id)
       render "patients/doctor_list"            
     end
   end
