@@ -135,6 +135,18 @@ class PatientsController < ApplicationController
     
   end
   
+  def remove_doctor
+    @doctor = Doctor.where(user_id: params[:doctorid]).first
+    @patient = Patient.where(user_id: params[:userid]).first
+    
+    if !@doctor.nil? && !@patient.nil?
+      DoctorPatient.delete_all(patient_id: @patient.id, doctor_id: @doctor.id)      
+    end
+    
+    render "patients/success"
+  end
+  
+  
   def upload_heartrate
     @patient = Patient.where(user_id: params[:userid]).limit(1)
     
