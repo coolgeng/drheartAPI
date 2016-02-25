@@ -102,13 +102,14 @@ class DoctorsController < ApplicationController
   
   def incidentnum
     type = params[:type].downcase
+            
     if type == 'no'
-      @incident_num = Doctor.where("user_id = ? and state = 0 ", params[:userid]).first.incident.count
+      @incident_num = Doctor.joins('left join incidents on doctors.id = `incidents`.`doctor_id`').select("*").where("user_id = ? and state = 0 ", params[:userid]).count
     else
-      @incident_num = Doctor.where("user_id = ? ", params[:userid]).first.incident.count
+      @incident_num = Doctor.joins('left join incidents on doctors.id = `incidents`.`doctor_id`').select("*").where("user_id = ?", params[:userid]).count
     end
     
-    render "doctors/incidentnum"      
+    render "doctors/incidentnum"
   end
   
   def accept 
