@@ -113,21 +113,39 @@ class DoctorsController < ApplicationController
   end
   
   def accept 
-    @patient = Patient.find_by_user_id(params[:patient_id])
-    @doctor = Doctor.find_by_user_id(params[:userid])    
+    @patient = Patient.where(user_id: params[:patient_id]).first
+    @doctor = Doctor.where(user_id: params[:userid]).first  
     
-    @doctor_patients = @doctor.doctor_patients
-    @doctor_patients.update_all(:status => params[:accept] == 1 ? 1 : -1)
-    # @doctor.doctor_patients.create(:patient_id => @patient.id,:status => @accept == 1 ? 1 : -1)
-    # @doctor.doctor_patients.
+    @doctor_patients = DoctorPatient.where(patient_id: @patient.id, doctor_id: @doctor.id).first
     
-    begin 
-      @doctor.save
-      rescue ActiveRecord::ActiveRecordError
-        render "error"
+    p params[:accept] == "1" ? 1: 0
+    p params[:accept]
+    # @doctor_patients.update_all(:status => params[:accept] == 1 ? 1 : -1)
+    if !@patient.nil? && !@doctor.nil?
+      DoctorPatient.delete_all(patient_id: @patient.id, doctor_id: @doctor.id)
+      begin
+        @doctor.doctor_patients.create(:patient_id => @patient.id,:status => params[:accept] == "1" ? 2 : 3 )
+        if @doctor.save
+          render "doctors/accept"
+        end
+      
+        rescue ActiveRecord::RecordNotUnique
+
+          render "error"
+      end
+    else 
+      render "doctors/accept"
     end
     
-      render "doctors/accept"
+    # @doctor_patients.update_attributes(:status => params[:accept] == 1 ? 1 : -1)
+    
+    # begin
+#       @doctor.save
+#       rescue ActiveRecord::ActiveRecordError
+#         render "error"
+#     end
+    
+      
     # @doctor = Doctor.new(params[:doctor])
     #
     # if @doctor.save

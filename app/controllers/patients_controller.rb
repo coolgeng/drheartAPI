@@ -109,19 +109,23 @@ class PatientsController < ApplicationController
   end
   
   def add_doctor
-    @patient = Patient.find_by_user_id(params[:userid])
-    @doctor = Doctor.find(params[:doctorid])
+    @patient = Patient.where(user_id: params[:userid]).first
+    @doctor = Doctor.where(user_id: params[:doctorid]).first
     
-    begin
-      @doctor.doctor_patients.create(:patient_id => @patient.id,:status => 0)
+    if !DoctorPatient.where(patient_id: @patient.id, doctor_id: @doctor.id).first.nil?
+      render "patients/exist_error"
+    else
+      begin
+        @doctor.doctor_patients.create(:patient_id => @patient.id,:status => 1)
 
-      if @doctor.save
-        render "patients/add_doctor"
-      end
+        if @doctor.save
+          render "patients/add_doctor"
+        end
       
-      rescue ActiveRecord::RecordNotUnique
+        rescue ActiveRecord::RecordNotUnique
 
-        render "error"
+          render "error"
+      end      
     end
     
 
