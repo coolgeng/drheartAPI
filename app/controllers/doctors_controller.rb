@@ -118,8 +118,6 @@ class DoctorsController < ApplicationController
     
     @doctor_patients = DoctorPatient.where(patient_id: @patient.id, doctor_id: @doctor.id).first
     
-    p params[:accept] == "1" ? 1: 0
-    p params[:accept]
     # @doctor_patients.update_all(:status => params[:accept] == 1 ? 1 : -1)
     if !@patient.nil? && !@doctor.nil?
       DoctorPatient.delete_all(patient_id: @patient.id, doctor_id: @doctor.id)
