@@ -49,7 +49,25 @@ class DoctorsController < ApplicationController
   def update
     @doctor = Doctor.find_by_user_id(params[:userid])
     
-    if !@doctor.nil? && Doctor.update(@doctor.id, hospital: params[:hospital], sector: params[:sector], position: params[:position])        
+    if params[:hospital].nil?
+      hospital = @doctor.hospital      
+    else
+      hospital = params[:hospital]
+    end    
+
+    if params[:sector].nil?
+      sector = @doctor.sector      
+    else
+      sector = params[:sector]
+    end
+    
+    if params[:position].nil?
+      position = @doctor.position      
+    else
+      position = params[:position]
+    end
+    
+    if !@doctor.nil? && Doctor.update(@doctor.id, hospital: hospital, sector: sector, position: position)        
       render "doctors/success"      
     else
       render "doctors/error"
