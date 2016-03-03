@@ -71,12 +71,17 @@ class DoctorsController < ApplicationController
     # @incidents = Incident.where(doctor_id: params[:userid])
     @doctor = Doctor.where(user_id: params[:userid]).first
     
+    type = params[:type].downcase
+    
     if @doctor.nil?
       render "doctors/error"
-    else 
+    elsif type == 'no'
+      @incidents = Incident.joins('left join doctors on incidents.doctor_id = doctors.id left join patients on patients.id = incidents.patient_id').select("doctors.name as doctor_name, incidents.*, patients.* ").where("incidents.doctor_id = ? and state in (0)", @doctor.id)      
+      render "doctors/incident_list"      
+    else
       @incidents = Incident.joins('left join doctors on incidents.doctor_id = doctors.id left join patients on patients.id = incidents.patient_id').select("doctors.name as doctor_name, incidents.*, patients.* ").where("incidents.doctor_id = ? and state in (0,1)", @doctor.id)
       render "doctors/incident_list"      
-    end      
+    end    
   end
     
   def patient_list
