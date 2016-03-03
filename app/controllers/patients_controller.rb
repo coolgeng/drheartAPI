@@ -187,6 +187,17 @@ class PatientsController < ApplicationController
     render "patients/search_doctor"
   end
   
+  def incidentnum
+    type = params[:type].downcase
+            
+    if type == 'no'
+      @incident_num = Patient.joins('left join incidents on patients.id = `incidents`.`patient_id`').select("*").where("user_id = ? and state = 0 ", params[:userid]).count
+    else
+      @incident_num = Patient.joins('left join incidents on patients.id = `incidents`.`patient_id`').select("*").where("user_id = ?", params[:userid]).count
+    end
+    
+    render "patients/incidentnum"
+  end
   
   private
      # Using a private method to encapsulate the permissible parameters is just a good pattern

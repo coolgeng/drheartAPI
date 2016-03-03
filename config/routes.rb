@@ -59,7 +59,7 @@ Rails.application.routes.draw do
   post '/v1/patient/removedoctor', to: 'patients#remove_doctor',  defaults: {format: :json}
   post '/v1/patient/searchdoctor', to: 'patients#search_doctor',  defaults: {format: :json}
   post '/v1/patient/uploadheartrate', to: 'patients#upload_heartrate', defaults: {format: :json}
-
+  post '/v1/patient/incidentnum', to: 'patients#incidentnum', defaults: {format: :json}    
 
   post '/v1/doctor/userinfo', to: 'doctors#show', defaults: {format: :json}
   post '/v1/doctor/incidentlist', to: 'doctors#incident_list', defaults: {format: :json}
