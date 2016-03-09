@@ -179,15 +179,24 @@ class PatientsController < ApplicationController
   
   def search_doctor
     keyword = params[:keyword]
-    @doctors = Doctor.joins('left join doctor_patients on doctors.id = doctor_patients.doctor_id left join patients on patients.id = doctor_patients.patient_id').select("doctors.*, doctor_patients.*").where("doctors.name like ?", "%#{keyword}%")
-      
-    # @patient = Patient.find_by_user_id(params[:userid])
-    # # where("name like ?", "%#{query}%")
-    # @patient.find(:all, joins: "left join `doctor_patients` on "
-    # 'patients.*, doctor_patients.status')
-    # @doctors = @patient.doctors.search(params[:keyword])
     
-    render "patients/search_doctor"
+    
+    # @doctors = Doctor.joins('left join doctor_patients on doctors.id = doctor_patients.doctor_id left join patients on patients.id = doctor_patients.patient_id').select("doctors.*, doctor_patients.*").where("doctors.name like ?", "%#{keyword}%")
+    @patient = Patient.where(user_id: params[:userid]).first
+    
+    if @patient.nil?
+      render "patients/error"
+    else
+      @doctors = Doctor.joins('left join doctor_patients on doctors.id = doctor_patients.doctor_id 
+                              left join patients on patients.id = doctor_patients.patient_id').
+                              select("doctors.*, doctor_patients.*").where("doctors.name like ? and patients.user_id = ? ", "%#{keyword}%", params[:userid]) +
+                              Doctor.joins('left join doctor_patients on doctors.id = doctor_patients.doctor_id 
+                                                          left join patients on patients.id = doctor_patients.patient_id').
+                                                          select("doctors.*, 0 as status").where("doctors.name like ? and patients.user_id != ? ", "%#{keyword}%", params[:userid])                             
+  
+      render "patients/search_doctor"      
+    end
+    
   end
   
   def incidentnum
