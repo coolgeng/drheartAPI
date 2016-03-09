@@ -103,11 +103,15 @@ class DoctorsController < ApplicationController
   end
     
   def patient_list
-    @doctor = Doctor.find_by_user_id(params[:userid])
+    @doctor = Doctor.where(user_id: params[:userid]).first
     
-    @patients = @doctor.patients.select('patients.*, doctor_patients.status')
-    
-    render "doctors/patient_list"
+    if @doctor.nil?
+      render "doctors/error"
+    else
+      @patients = Patient.joins("INNER JOIN `doctor_patients` ON `patients`.`id` = `doctor_patients`.`patient_id`").select("`patients`.*, `doctor_patients`.status as status").where("`doctor_patients`.`doctor_id` = ?", @doctor.id)
+      render "doctors/patient_list"
+    end
+
   end
   
   
