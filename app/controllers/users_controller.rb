@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   include ActionController::Cookies
   include ActionController::ImplicitRender
   include ApplicationHelper
+  include UserHelper
   
   # GET /users
   # GET /users.json
@@ -174,6 +175,14 @@ class UsersController < ApplicationController
   end
 
   def upload_avatar
+    # p '1'
+    # UserHelper.get_bucket
+    # p '2'
+    if !params[:avatar].nil?
+      p 'avatar is: --------------------'      
+      p params[:avatar]
+      p '--------------------'      
+    end
     render "users/success"
   end
 
