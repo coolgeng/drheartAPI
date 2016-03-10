@@ -178,9 +178,12 @@ class UsersController < ApplicationController
     # p '1'
     # UserHelper.get_bucket
     # p '2'
-      print 'avatar is: --------------------'      
-      print params[:avatar]
-      print '--------------------'      
+      # print 'avatar is: --------------------'
+      # print params[:avatar]
+      # print '--------------------'
+      
+      logger.debug "#{params[:avatar]}"      
+      
     render "users/success"
   end
 
