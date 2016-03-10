@@ -178,11 +178,9 @@ class UsersController < ApplicationController
     # p '1'
     # UserHelper.get_bucket
     # p '2'
-    if !params[:avatar].nil?
       print 'avatar is: --------------------'      
       print params[:avatar]
       print '--------------------'      
-    end
     render "users/success"
   end
 
